@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LoRaPacket": {
+      "commandName": "Project",
+      "commandLineArgs": "decrypt --hex 40531E012680664601457090ED25 --nwkskey 7A47F143D7CEF033DFA0D4B75E04A316 --appskey F1B0B1D3CC529C55C3019A46EF4582EA"
+    }
+  }
+}
