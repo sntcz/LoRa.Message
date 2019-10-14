@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
+    <Company>S&amp;T CZ</Company>
+    <Authors>S&amp;T CZ</Authors>
+    <Description>A pure C# library to decode and encode packets for LoRa/LoRaWAN radio communication</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/sntcz/LoRa.Message</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sntcz/LoRa.Message</RepositoryUrl>
+    <PackageTags>LoRa;LoRaWAN</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
