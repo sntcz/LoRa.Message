@@ -28,18 +28,18 @@ accepts input in hex and base-64
 
 ## Usage (in your code)
 
-```(csharp)
+```csharp
 PHYPayload packet = new PHYPayload(data, nwkSKey, appSKey, 0);
 ```
 
 
 ## Usage (command-line packet decoding)
 
-```
+```dos
 dotnet LoRaPacket.dll decode --hex 40F17DBE4900020001954378762B11FF0D
 ```
 
-```
+```dos
 dotnet LoRaPacket.dll decode --base64 QK4TBCaAAAABb4ldmIEHFOMmgpU= \
     --nwkskey 99D58493D1205B43EFF938F0F66C339E \
     --appskey 0A501524F8EA5FCBF9BDB5AD7D126F75
