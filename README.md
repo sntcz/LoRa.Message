@@ -19,8 +19,8 @@ accepts input in hex and base-64
 * [x] payload decryption
 * [x] decode uplink & downlink packets
 * [ ] unit tests for everything
-  * [ ] MIC calculation
-  * [ ] message decryption
+  * [x] MIC calculation
+  * [x] message decryption
   * [ ] utility conversion 
 * [ ] decode join request packets
 * [ ] decode join accept packets
