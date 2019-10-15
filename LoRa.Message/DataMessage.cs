@@ -5,13 +5,14 @@ namespace LoRa.Message
 {
     public class DataMessage : MACPayload
     {
+        private Lazy<CalculatedMIC> _calculatedMIC;
+        public override CalculatedMIC CalculatedMIC => _calculatedMIC.Value;
+
         public FHDR Fhdr { get; }
         public FPort FPort { get; }
         public FRMPayload FrmPayload { get; }
 
         private byte[] nwkSKey;
-        private Lazy<CalculatedMIC> _calculatedMIC;
-        public CalculatedMIC CalculatedMIC => _calculatedMIC.Value;       
 
         public DataMessage(IPayloadPart parent, byte[] nwkSKey, byte[] appSKey, int fCntMsbSeed) : base(parent)
         {

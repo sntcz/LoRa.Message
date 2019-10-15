@@ -12,20 +12,20 @@ namespace LoRa.Message
         public MACPayload MacPayload { get; }
         public MIC Mic { get; }
 
-        public PHYPayload(byte[] packet) : this(packet, null, null, 0)
+        public PHYPayload(byte[] packet) : this(packet, null, null, null, 0)
         { /*NOP */ }
 
-        public PHYPayload(byte[] packet, byte[] nwkSKey, byte[] appSKey, int fCntMsbSeed)
+        public PHYPayload(byte[] packet, byte[] nwkSKey, byte[] appSKey, byte[] appKey, int fCntMsbSeed)
         {
             Packet = packet;
             Mhdr = new MHDR(this);
             switch (Mhdr.MessageType)
             {
                 case MessageType.JoinRequest:
-                    MacPayload = new JoinRequestMessage(this);
+                    MacPayload = new JoinRequestMessage(this, appKey);
                     break;
                 case MessageType.JoinAccept:
-                    MacPayload = new JoinAcceptMessage(this);
+                    MacPayload = new JoinAcceptMessage(this, appKey);
                     break;
                 case MessageType.Data:
                     MacPayload = new DataMessage(this, nwkSKey, appSKey, fCntMsbSeed);

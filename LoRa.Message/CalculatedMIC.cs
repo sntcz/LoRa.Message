@@ -38,21 +38,20 @@ namespace LoRa.Message
         }
 
         /// <summary>
-        /// Not implemented yet
+        /// 
         /// </summary>
         /// <param name="joinAcceptMessage"></param>
         /// <param name="appKey"></param>
         public CalculatedMIC(JoinRequestMessage joinRequestMessage, byte[] appKey)
         {
-            throw new NotImplementedException();
             if (appKey != null && appKey.Length == 16)
             {
                 CryptoService crypto = new CryptoService();
                 // cmac = aes128_cmac(AppKey, MHDR | AppEUI | DevEUI | DevNonce)
                 // MIC = cmac[0..3]
-                byte[] data = new byte[255]; // TODO: Calculate 
+                byte[] data = new byte[joinRequestMessage.RawData.Length + 1];
                 joinRequestMessage.Parent.Mhdr.RawData.CopyTo(data.AsSpan()); // [1]
-                // TODO: Implement copy
+                joinRequestMessage.RawData.CopyTo(data.AsSpan(1));
                 byte[] fullCAMC = crypto.AESCMAC(appKey, data);
                 RawData = fullCAMC.AsSpan(0, 4).ToArray();
                 IsValid = true;
@@ -65,20 +64,20 @@ namespace LoRa.Message
         }
 
         /// <summary>
-        /// Not implemented yet
+        /// 
         /// </summary>
         /// <param name="joinAcceptMessage"></param>
         /// <param name="appKey"></param>
         public CalculatedMIC(JoinAcceptMessage joinAcceptMessage, byte[] appKey)
         {
-            throw new NotImplementedException();
             if (appKey != null && appKey.Length == 16)
             {
                 CryptoService crypto = new CryptoService();
                 // cmac = aes128_cmac(AppKey, MHDR | AppNonce | NetID | DevAddr | DLSettings | RxDelay | CFList)
                 // MIC = cmac[0..3]
-                byte[] data = new byte[255]; // TODO: Calculate 
-                // TODO: Implement copy 
+                byte[] data = new byte[joinAcceptMessage.RawData.Length + 1]; 
+                joinAcceptMessage.Parent.Mhdr.RawData.CopyTo(data.AsSpan()); // [1]
+                joinAcceptMessage.RawData.CopyTo(data.AsSpan(1)); 
                 byte[] fullCAMC = crypto.AESCMAC(appKey, data);
                 RawData = fullCAMC.AsSpan(0, 4).ToArray();
                 IsValid = true;

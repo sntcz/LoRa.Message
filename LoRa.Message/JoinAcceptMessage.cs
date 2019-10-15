@@ -5,27 +5,44 @@ namespace LoRa.Message
 {
     public class JoinAcceptMessage : MACPayload
     {
-        public PayloadPart<JoinAcceptMessage> AppNonce { get; }
+        private Lazy<CalculatedMIC> _calculatedMIC;
+        public override CalculatedMIC CalculatedMIC => _calculatedMIC.Value;
 
-        public JoinAcceptMessage(IPayloadPart parent) : base(parent)
+        public AppNonce AppNonce { get; }       
+        public NetID NetID { get; }
+        public DevAddr DevAddr { get; }
+        public DLsettings DLSettings { get; }
+        public RxDelay RxDelay { get; }
+        public PayloadPart<JoinAcceptMessage> CFList { get; }
+
+        public JoinAcceptMessage(IPayloadPart parent, byte[] appKey) : base(parent)
         {
-            AppNonce = new PayloadPart<JoinAcceptMessage>(this, 0, 3);
+            AppNonce = new AppNonce(this);
+            NetID = new NetID(this);
+            DevAddr = new DevAddr(this);
+            DLSettings = new DLsettings(this);
+            RxDelay = new RxDelay(this);
+            CFList = new PayloadPart<JoinAcceptMessage>(this, 12, RawData.Length - 12);
+            _calculatedMIC = new Lazy<CalculatedMIC>(() => new CalculatedMIC(this, appKey));
         }
 
         public override string ToVerboseString()
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(" (MACPayload = AppNonce[3] | NetID[3] | DevAddr[4] | DLSettings[1] | RxDelay[1] | CFList[0 | 15])").AppendLine();
-            sb.AppendFormat("    AppNonce = {0}", AppNonce.RawData.ToHexString()).AppendLine();
-            //sb.AppendFormat("       NetID = FF08F5").AppendLine();
-            //sb.AppendFormat("     DevAddr = 6E0B67A2").AppendLine();
-            //sb.AppendFormat("  DLSettings = 23").AppendLine();
-            //sb.AppendFormat("     RxDelay = E0").AppendLine();
-            //sb.AppendFormat("      CFList = 1F84B9E25D9C4115F02EEA0B3DD3E20B").AppendLine();
-            //sb.AppendLine();
-            //sb.AppendFormat("DLSettings.RX1DRoffset = 2").AppendLine();
-            //sb.AppendFormat("DLSettings.RX2DataRate = 3").AppendLine();
-            //sb.AppendFormat("           RxDelay.Del = 0").AppendLine();
+            sb.AppendFormat("    AppNonce = {0}", AppNonce.Value).AppendLine();
+            sb.AppendFormat("       NetID = {0}", NetID.Value).AppendLine();
+            sb.AppendFormat("     DevAddr = {0}", DevAddr.Address).AppendLine();
+            sb.AppendFormat("  DLSettings = {0}", DLSettings.RawData.ToHexString()).AppendLine();
+            sb.AppendFormat("     RxDelay = {0}", RxDelay.RawData.ToHexString()).AppendLine();
+            sb.AppendFormat("      CFList = {0}", CFList.RawData.ToHexString()).AppendLine();
+            sb.AppendLine();
+            sb.Append(DLSettings.ToVerboseString());
+            sb.AppendLine();
+            sb.Append(RxDelay.ToVerboseString());
+            if (CalculatedMIC.IsValid)
+                sb.AppendFormat("    Calc MIC = {0})", CalculatedMIC.RawData.ToHexString()).AppendLine();
+
             return sb.ToString();
         }
     }

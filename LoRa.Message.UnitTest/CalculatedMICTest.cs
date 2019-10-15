@@ -13,7 +13,7 @@ namespace LoRa.Message.UnitTest
         [DataRow("40F17DBE4900020001954378762B11FF0D", "44024241ED4CE9A68C6A8BC055233FD3", "2B11FF0D", DisplayName = "32-bit FCnts are used")]
         public void CalculateMICTest(string hexData, string nwkSKey, string expected)
         {
-            PHYPayload packet = new PHYPayload(hexData.FromHexString(), nwkSKey.FromHexString(), null, 0);
+            PHYPayload packet = new PHYPayload(hexData.FromHexString(), nwkSKey.FromHexString(), null, null, 0);
             Assert.AreEqual(expected, ((DataMessage)packet.MacPayload).CalculatedMIC.RawData.ToHexString());
         }
 
@@ -23,7 +23,7 @@ namespace LoRa.Message.UnitTest
         [DataRow("QFMeASaAZkYBRXCQ7SU=", "7A47F143D7CEF033DFA0D4B75E04A316", 8, 7, DisplayName = "Initial seed 8")]
         public void SeedFCntMSBTest(string base64, string nwkSKey, int fCntMsbSeed, int expectedSeedResult)
         {
-            PHYPayload packet = new PHYPayload(base64.FromBase64String(), nwkSKey.FromHexString(), null, fCntMsbSeed);
+            PHYPayload packet = new PHYPayload(base64.FromBase64String(), nwkSKey.FromHexString(), null, null, fCntMsbSeed);
             Assert.AreEqual(expectedSeedResult, ((DataMessage)packet.MacPayload).CalculatedMIC.FCntMSB);
         }
 

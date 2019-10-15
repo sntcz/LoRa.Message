@@ -13,7 +13,7 @@ namespace LoRa.Message.UnitTest
             "44024241ED4CE9A68C6A8BC055233FD3", "EC925802AE430CA77FD3DD73CB2CC588", "The quick brown fox jumps over the lazy dog.")]
         public void DecryptPacketTest(string hexData, string nwkSKey, string appSKey, string expected)
         {
-            PHYPayload packet = new PHYPayload(hexData.FromHexString(), nwkSKey.FromHexString(), appSKey.FromHexString(), 0);
+            PHYPayload packet = new PHYPayload(hexData.FromHexString(), nwkSKey.FromHexString(), appSKey.FromHexString(), null, 0);
             Assert.AreEqual(expected, System.Text.Encoding.ASCII.GetString(((DataMessage)packet.MacPayload).FrmPayload.Decrypt()));
         }
 

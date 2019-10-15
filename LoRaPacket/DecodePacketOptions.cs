@@ -20,5 +20,8 @@ namespace LoRaPacket
         [Option]
         public string AppSKey { get; set; }
 
+        [Option]
+        public string AppKey { get; set; }
+
     }
 }
