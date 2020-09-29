@@ -13,7 +13,7 @@ namespace LoRa.Message
         public override Span<byte> RawData => Parent.RawData.Slice(0, Length);
         public FHDR(IPayloadPart parent) : base(parent)
         {
-            Length = 7 + (Parent.RawData[4] & 0x03);
+            Length = 7 + (Parent.RawData[4] & 0x0f);
             DevAddr = new DevAddr(this);
             FCtrl = new FCtrl(this);
             FCnt = new FCnt(this);
