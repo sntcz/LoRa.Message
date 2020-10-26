@@ -55,8 +55,8 @@ namespace LoRa.Message
             block[5] = (byte)(Parent.Parent.Mhdr.LinkDirection == LinkDirection.Up ? 0 : 1);
             ((DataMessage)Parent.Parent.MacPayload).Fhdr.DevAddr.RawData.CopyTo(block.Slice(6, 4));
             ((DataMessage)Parent.Parent.MacPayload).Fhdr.FCnt.RawData.CopyTo(block.Slice(10, 2));
-            //block[12] = (byte)(((DataMessage)Parent.Parent.MacPayload).CalculatedMIC.FCntMSB & 0xFF);
-            //block[13] = (byte)((((DataMessage)Parent.Parent.MacPayload).CalculatedMIC.FCntMSB >> 8) & 0xFF);
+            block[12] = (byte)(((DataMessage)Parent.Parent.MacPayload).CalculatedMIC.FCntMSB & 0xFF);
+            block[13] = (byte)((((DataMessage)Parent.Parent.MacPayload).CalculatedMIC.FCntMSB >> 8) & 0xFF);
             block[14] = 0;
             block[15] = (byte)(i);
 
