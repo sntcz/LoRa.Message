@@ -18,12 +18,12 @@ namespace LoRa.Message.UnitTest
         }
 
         [DataTestMethod]
-        [DataRow("QFMeASaAZkYBRXCQ7SU=", "7A47F143D7CEF033DFA0D4B75E04A316", 0, 7, DisplayName = "Initial seed 0")]
-        [DataRow("QFMeASaAZkYBRXCQ7SU=", "7A47F143D7CEF033DFA0D4B75E04A316", 7, 7, DisplayName = "Initial seed 7")]
-        [DataRow("QFMeASaAZkYBRXCQ7SU=", "7A47F143D7CEF033DFA0D4B75E04A316", 8, 7, DisplayName = "Initial seed 8")]
-        public void SeedFCntMSBTest(string base64, string nwkSKey, int fCntMsbSeed, int expectedSeedResult)
+        [DataRow("40531E012680664601457090ED25", "7A47F143D7CEF033DFA0D4B75E04A316", 0, 7, DisplayName = "Initial seed 0")]
+        [DataRow("40531E012680664601457090ED25", "7A47F143D7CEF033DFA0D4B75E04A316", 7, 7, DisplayName = "Initial seed 7")]
+        [DataRow("40531E012680664601457090ED25", "7A47F143D7CEF033DFA0D4B75E04A316", 8, 7, DisplayName = "Initial seed 8")]
+        public void SeedFCntMSBTest(string hexData, string nwkSKey, int fCntMsbSeed, int expectedSeedResult)
         {
-            PHYPayload packet = new PHYPayload(base64.FromBase64String(), nwkSKey.FromHexString(), null, null, fCntMsbSeed);
+            PHYPayload packet = new PHYPayload(hexData.FromHexString(), nwkSKey.FromHexString(), null, null, fCntMsbSeed);
             Assert.AreEqual(expectedSeedResult, ((DataMessage)packet.MacPayload).CalculatedMIC.FCntMSB);
         }
 
