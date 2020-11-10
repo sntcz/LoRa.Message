@@ -33,7 +33,15 @@ namespace LoRa.Message
             if (nwkSKey != null)
             {
                 if (CalculatedMIC.IsValid)
+                {
                     sb.AppendFormat("    Calc MIC = {0} (assumed FCntMSB {1:X4})", CalculatedMIC.RawData.ToHexString(), CalculatedMIC.FCntMSB).AppendLine();
+                    //sb.AppendFormat("        FCnt = {0} 0x{0:X4} (from packet, 16 bits)", Fhdr.FCnt.Value).AppendLine();
+                    if (CalculatedMIC.FCntMSB > 0)
+                    {
+                        int fcnt = (CalculatedMIC.FCntMSB << 16) + Fhdr.FCnt.Value;
+                        sb.AppendFormat("        FCnt = {0} 0x{0:X4} (32 bits, assuming MSB {1:X4})", fcnt, CalculatedMIC.FCntMSB).AppendLine();
+                    }
+                }
                 else
                     sb.AppendFormat("    Calc MIC = INVALID ", CalculatedMIC.RawData.ToHexString(), CalculatedMIC.FCntMSB).AppendLine();
             }
