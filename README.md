@@ -1,6 +1,6 @@
 # LoRa.Message
 
-A pure C# library to decode and encode packets for LoRa/LoRaWAN<sup>TM</sup> 
+A pure C# library to decode packets for LoRa/LoRaWAN<sup>TM</sup> 
 radio communication, based on the specification from 
 the [LoRa Alliance](https://www.lora-alliance.org/) (based on V1.0.3)
 
