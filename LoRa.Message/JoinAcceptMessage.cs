@@ -14,6 +14,7 @@ namespace LoRa.Message
         public DLsettings DLSettings { get; }
         public RxDelay RxDelay { get; }
         public PayloadPart<JoinAcceptMessage> CFList { get; }
+        public DevNonce JoinRequestDevNonce { get; set; }
 
         public JoinAcceptMessage(IPayloadPart parent, byte[] appKey) : base(parent)
         {
