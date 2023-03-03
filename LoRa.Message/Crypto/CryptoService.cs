@@ -41,6 +41,23 @@ namespace LoRa.Message.Crypto
                 }
             }
         }
+        public byte[] AESDecrypt(byte[] key, byte[] data)
+        {
+            return AESDecrypt(aesAlg, key, IV, data);
+        }
+        private byte[] AESDecrypt(Aes aes, byte[] key, byte[] iv, byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(key, iv), CryptoStreamMode.Write))
+                {
+                    cs.Write(data, 0, data.Length);
+                    cs.FlushFinalBlock();
+                    return ms.ToArray();
+                }
+            }
+        }
+
 
         #region AEC Encrypt
 

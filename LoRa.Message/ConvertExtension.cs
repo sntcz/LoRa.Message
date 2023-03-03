@@ -110,5 +110,8 @@ namespace LoRa.Message
             return Convert.FromBase64String(hex);
         }
 
-    }
+       
+
+
+        }
 }
