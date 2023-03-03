@@ -14,6 +14,7 @@ namespace LoRa.Message
         public DLsettings DLSettings { get; }
         public RxDelay RxDelay { get; }
         public PayloadPart<JoinAcceptMessage> CFList { get; }
+        public JoinRequestMessage joinRequestMessage { get; set; }
 
         public JoinAcceptMessage(IPayloadPart parent, byte[] appKey) : base(parent)
         {
@@ -25,6 +26,7 @@ namespace LoRa.Message
             CFList = new PayloadPart<JoinAcceptMessage>(this, 12, RawData.Length - 12);
             _calculatedMIC = new Lazy<CalculatedMIC>(() => new CalculatedMIC(this, appKey));
         }
+     
 
         public override string ToVerboseString()
         {
