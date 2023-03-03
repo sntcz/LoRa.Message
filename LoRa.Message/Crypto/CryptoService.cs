@@ -41,6 +41,7 @@ namespace LoRa.Message.Crypto
                 }
             }
         }
+        #region AES Decrypt
         public byte[] AESDecrypt(byte[] key, byte[] data)
         {
             return AESDecrypt(aesAlg, key, IV, data);
@@ -57,9 +58,10 @@ namespace LoRa.Message.Crypto
                 }
             }
         }
+        #endregion
 
 
-        #region AEC Encrypt
+        #region AES Encrypt
 
         public byte[] AESEncrypt(byte[] key, byte[] data)
         {
